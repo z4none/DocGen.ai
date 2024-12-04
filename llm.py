@@ -7,10 +7,17 @@ class LLM:
         """
         Initialize the LLM class with API token and URL from environment variables.
         """
+        # Check if API token is set, raise an error if not
+        api_token = os.getenv('MAKE_DOC_API_TOKEN')
+        if not api_token:
+            raise EnvironmentError('Environment variable MAKE_DOC_API_TOKEN is not set.')
+
         self.client = openai.OpenAI(
-            api_key=os.getenv('MAKE_DOC_API_TOKEN'),
-            base_url=os.getenv('MAKE_DOC_API_URL'),
+            api_key=api_token,
+            base_url=os.getenv('MAKE_DOC_API_URL', 'https://api.openai.com/v1'),
         )
+        # Set the model from environment variable or use default
+        self.model = os.getenv('MAKE_DOC_MODEL', 'gpt-4o-mini')
         # Define the prompt template during initialization
         self.prompt_template = '''帮我用中文整理以下SDK 中的 函数、参数以及结构定义的说明，输出为 markdown
 我希望输出的格式为：
@@ -33,7 +40,7 @@ class LLM:
             str: The generated documentation in markdown format.
         """
         response = self.client.chat.completions.create(
-            model="deepseek-chat",
+            model=self.model,
             messages=[
                 {
                     "role": "user",
