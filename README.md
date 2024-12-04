@@ -1,7 +1,7 @@
 # 文档生成工具
 
 ## 概述
-此项目是一个文档生成工具，适用于 C/C++ 项目。它自动生成 markdown 文档，支持多种静态网站生成器，包括但不限于 VitePress，未来将支持更多语言。
+此项目是一个文档生成工具，适用于 C/C++ 项目。它自动从源代码中生成 markdown 文档，并且翻译成中文，支持多种静态网站生成器，包括但不限于 VitePress，未来将支持更多语言。
 
 ## 功能
 - 从 C/C++ 源代码头文件自动生成 markdown 文档。
@@ -11,7 +11,7 @@
 ## 先决条件
 - Python 3.x
 - OpenAI API
-- VitePress
+- 静态网站生成器，比如 VitePress
 
 ## 安装
 1. 克隆仓库：
@@ -26,6 +26,12 @@
    ```bash
    pip install -r requirements.txt
    ```
+4. 配置 OpenAi 环境变量:
+   ```bash
+   export MAKE_DOC_API_TOKEN='your-openai-api-key'
+   export MAKE_DOC_API_URL='https://api.openai.com/v1'
+   ```
+   支持兼容 OpenAi API 的第三方服务，比如 DeepSeek。
 
 ## 使用方法
 运行主脚本以处理源代码并生成文档：
